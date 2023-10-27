@@ -27,4 +27,5 @@ This dataset contains 2 columns after cleaning: State and Index. The greater the
 MIT Election Data and Science Lab, 2018, "County Presidential Election Returns 2000-2020", https://doi.org/10.7910/DVN/VOQCHQ, Harvard Dataverse, V11, UNF:6:HaZ8GWG8D2abLleXN3uEig== [fileUNF]
 This dataset contains political results from every US County in the 2020 Presidential Election. After cleaning, the columns contained are County, State, Party (DEM/REP), percent_dem (percent of dem votes in county), percent_rep (percent of rep votes in county).
 
-
+https://worldpopulationreview.com/state-rankings/public-school-rankings-by-state
+Public School rankings by state including columns state, OverallRanking, SchoolQuality, StudentSafety, StudentSuccess
