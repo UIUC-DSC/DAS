@@ -1,31 +1,18 @@
 ## Team DAS - Danny Silverstein, Anton Charov, and Sam Barbeau
 
 # Overview: 
-Our U.S. County Recommender System is a user-friendly application designed to assist users in finding the most suitable county in the United States to live in based on their personal preferences and demographic information. By collecting a variety of data points ranging from age, race, and preferred temperature to additional specific preferences, our system provides tailored recommendations aiming to enhance the user’s quality of life and overall satisfaction in their new locale.
+Our U.S. County Recommender System is a user-friendly application designed to assist users in finding their most suitable counties in the United States to live in based on their personal preferences and demographic information. By collecting a variety of data points ranging from age, race, and preferred temperature to additional specific preferences, our system provides tailored recommendations aiming to enhance the user’s quality of life and overall satisfaction in their new locale.
 
 # Languages: 
-Python (cleaning), SQL (filtering counties by score), R (cleaning and generating QoL dataset)
+Python (cleaning and implementing), R (cleaning and analyzing), SQL (analyzing)
 
 # Goal:
-By prompting the user with questions, we will generate a "profile" for the user. Using this profile, we will match them to a county by generating scores that indicate the similarity between that county and the user's answers. Given our imense number of columns as seen below, our questions to the user will be prompted in such a way that they answer multiple columns in one question. To ensure that we can apply an answer from one column to another column, we generated linear regression models to assess similarity using pandas, statsmodels.formula.api, seaborn, and matplotlib.pyplot. This code can be seen in logRegressionsNotes.py. 
+By prompting the user with questions, we will generate a temporary user "county". Using this data, we will assign the user to a group of similar counties after a series of fundemental statistical and ML techniques (i.e., PCA and k-means). Given our imense number of columns as seen below, our questions to the user will be prompted to answer only the most important variables in our data; the remaining variables are imputed.
 
-Using a website, we plan on matching a user to their ideal county/counties through a series of questions. Once the questions are finished, states with ideal counties (top 10 highest rated counties using SQL) will highlight yellow, allowing the user to click on the state to see more information about the county's score breakdown. 
+After matching users to their ideal counties after thorough analysis and series of questions, the counties will be displayed on an interactive map using the Folium library.
 
 # Citations/Datasets:
 John Davis (johnjdavisiv), Kaggle: US Counties: COVID19 + Weather + Socio/Health data (big_dataset.csv). 
-This dataset contains the columns: state, county, lat, lon, high_school_graduation_rate, total_population, area_sqmi, percent_uninsured, percent_some_college,eightieth_percentile_income, twentieth_percentile_income, median_household_income, annual_average_violent_crimes, percent_less_than_18_years_of_age, percent_65_and_over, percent_black, percent_american_indian_alaska_native, percent_asian, percent_native_hawaiian_other_pacific_islander, percent_hispanic, percent_non_hispanic_white, percent_drive_alone_to_work, percent_long_commute_drives_alone, percent_below_poverty, percent_unemployed_CDC, km_to_closest_station, station_name, min_winter_temp, mean_winter_temp, max_winter_temp, min_summer_temp, mean_summer_temp, max_summer_temp, snow (boolean).
+This dataset contains the columns: county, state, lat, lon, total_population, population_density_per_sqmi, percent_fair_or_poor_health, percent_smokers, percent_adults_with_obesity, percent_physically_inactive, percent_excessive_drinking, teen_birth_rate, percent_uninsured, high_school_graduation_rate, percent_some_college, labor_force, percent_children_in_poverty, social_association_rate, violent_crime_rate, percent_severe_housing_problems, overcrowding, inadequate_facilities, life_expectancy, percent_frequent_physical_distress, percent_frequent_mental_distress, percent_adults_with_diabetes, percent_food_insecure, percent_insufficient_sleep, average_grade_performance, median_household_income, percent_enrolled_in_free_or_reduced_lunch, average_traffic_volume_per_meter_of_major_roadways, percent_homeowners, percent_severe_housing_cost_burden, percent_less_than_18_years_of_age, percent_65_and_over, percent_not_proficient_in_english, percent_female, percent_rural, per_capita_income, percentile_rank_below_poverty, percentile_rank_unemployed, percentile_rank_per_capita_income, percentile_rank_no_highschool_diploma, percentile_rank_socioeconomic_theme, percentile_rank_age_65_and_older, percentile_rank_age_17_and_younger, percentile_rank_disabled, percentile_rank_single_parent_households, percentile_rank_household_comp_disability_theme, percentile_rank_minorities, percentile_rank_limited_english_abilities, percentile_rank_minority_status_and_language_theme, percentile_rank_multi_unit_housing, percentile_rank_mobile_homes, percentile_rank_overcrowding, percentile_rank_no_vehicle, percentile_rank_institutionalized_in_group_quarters, percentile_rank_housing_and_transportation, percentile_rank_social_vulnerability, mean_winter_temp, mean_summer_temp.
 
-The above dataset was also used by Sam to create a Quality of Life Column. His process for creating this column is explained below:
-First I made a subset of the all columns county dataset with just county,state, and the columns I used to make the calculation. Then normalized the sum of the columns for each row (each row is a county) on a scale from 0,1 and took the complement (1 - x) since all the columns represent bad well being (higher data should mean lower score). Finally, I multiplied by 10 so the score is on a scale from 1,10.
-
-https://taxfoundation.org/data/all/state/2023-sales-tax-rates-midyear/
-This dataset contains basic information about tax rates. It contains 3 columns after our cleaning process: State, State Tax Rate, and Rank.
-
-https://www.statista.com/statistics/1240947/cost-of-living-index-usa-by-state/
-This dataset contains 2 columns after cleaning: State and Index. The greater the index, the greater the cost of living. The meaning of the Cost of Living Index (COLI) and its calculations can be found here: https://www.xpatulator.com/cost-of-living-article/How-to-Calculate-a-Cost-of-Living-Index_256.cfm
-
-MIT Election Data and Science Lab, 2018, "County Presidential Election Returns 2000-2020", https://doi.org/10.7910/DVN/VOQCHQ, Harvard Dataverse, V11, UNF:6:HaZ8GWG8D2abLleXN3uEig== [fileUNF]
-This dataset contains political results from every US County in the 2020 Presidential Election. After cleaning, the columns contained are County, State, Party (DEM/REP), percent_dem (percent of dem votes in county), percent_rep (percent of rep votes in county).
-
-https://worldpopulationreview.com/state-rankings/public-school-rankings-by-state
-Public School rankings by state including columns state, OverallRanking, SchoolQuality, StudentSafety, StudentSuccess
+The above list of variables are the variables we use in our analysis. The other variables in the original dataset were found to be insignificant for our purposes.
